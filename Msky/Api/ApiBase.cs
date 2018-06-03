@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Msky.Entities;
 
@@ -16,6 +17,23 @@ namespace Msky.Api
         internal ApiBase(Credential credential)
         {
             Credential = credential;
+        }
+
+        public void UpdateApiKey(string userAccessToken, string appSecret)
+        {
+            using (var hash = SHA256.Create())
+            {
+                var apiKey = String.Concat(hash
+                    .ComputeHash(Encoding.UTF8.GetBytes(userAccessToken + appSecret))
+                    .Select(item => item.ToString("x2")));
+
+                UpdateApiKey(apiKey);
+            }
+        }
+
+        public void UpdateApiKey(string apiKey)
+        {
+            Credential.ApiKey = apiKey;
         }
 
         /// <summary>

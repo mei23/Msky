@@ -18,7 +18,7 @@ namespace Msky.Api
         /// <param name="limit"></param>
         /// <param name="cursor"></param>
         /// <returns></returns>
-        public async Task<Mute> ListAsync(bool iknow = false, int limit = 30, string cursor = null)
+        public async Task<Mute[]> ListAsync(bool iknow = false, int limit = 30, string cursor = null)
         {
             var q = new Dictionary<string, object>() {
                 { "iknow", iknow },
@@ -26,7 +26,7 @@ namespace Msky.Api
                 { "cursor", cursor },
             };
 
-            return await RequestObjectAsync<BaseObject>("/api/mute/list", q);
+            return await RequestArrayAsync<Mute>("/api/mute/list", q);
         }
 
         /// <summary>

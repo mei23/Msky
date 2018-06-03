@@ -60,8 +60,9 @@ namespace Msky
 
         #region app
         #endregion
-        #region auth
-        #endregion
+
+        public AuthApi Auth => new AuthApi(Credential);
+
         #region aggregation
         #endregion
         #region sw
