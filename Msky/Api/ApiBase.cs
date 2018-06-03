@@ -19,7 +19,7 @@ namespace Msky.Api
             Credential = credential;
         }
 
-        public void UpdateApiKey(string userAccessToken, string appSecret)
+        public string UpdateApiKey(string userAccessToken, string appSecret)
         {
             using (var hash = SHA256.Create())
             {
@@ -28,12 +28,15 @@ namespace Msky.Api
                     .Select(item => item.ToString("x2")));
 
                 UpdateApiKey(apiKey);
+
+                return apiKey;
             }
         }
 
-        public void UpdateApiKey(string apiKey)
+        public string UpdateApiKey(string apiKey)
         {
             Credential.ApiKey = apiKey;
+            return apiKey;
         }
 
         /// <summary>
